@@ -1,4 +1,4 @@
-FROM centos:latest
+FROM scratch
 
 COPY ./registry-meta /bin/registry-meta
 
