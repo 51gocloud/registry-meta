@@ -20,6 +20,8 @@ func main() {
 
 	r.GET("/v2/repositories/:library/:name", GetInfoHandler)
 	r.GET("/v2/repositories/:library/:name/tags", GetInfoHandler)
+	r.OPTIONS("/v2/repositories/:library/:name", OptInfoHandler)
+	r.OPTIONS("/v2/repositories/:library/:name/tags", OptInfoHandler)
 
 	http.ListenAndServe(":"+port, r)
 }
@@ -45,4 +47,10 @@ func GetInfoHandler(rw http.ResponseWriter, r *http.Request, p httprouter.Params
 	}
 
 	rw.Write(body)
+}
+func OptInfoHandler(rw http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	rw.Header().Set("Access-Control-Allow-Origin", "*")
+	rw.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+	rw.Header().Set("Access-Control-Allow-Headers", "X-PINGOTHER")
+	rw.Header().Set("Access-Control-Max-Age", "1728000")
 }
