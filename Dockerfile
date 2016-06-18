@@ -2,6 +2,6 @@ FROM centos:latest
 
 COPY ./registry-meta /bin/registry-meta
 
-EXPOSE 6000
+EXPOSE 9820
 
 ENTRYPOINT ["/bin/registry-meta"]

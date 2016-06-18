@@ -13,7 +13,7 @@ import (
 func main() {
 	port := os.Getenv("MetaPort")
 	if port == "" {
-		port = "6000"
+		port = "9820"
 	}
 
 	r := httprouter.New()
@@ -27,6 +27,10 @@ func main() {
 }
 
 func GetInfoHandler(rw http.ResponseWriter, r *http.Request, p httprouter.Params) {
+        rw.Header().Set("Access-Control-Allow-Origin", "*")
+        rw.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+        rw.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild")
+        rw.Header().Set("Content-Type", "application/json")
 	var client redis.Client
 	body, err := client.Get(r.RequestURI)
 	if err != nil {
@@ -37,6 +41,9 @@ func GetInfoHandler(rw http.ResponseWriter, r *http.Request, p httprouter.Params
 			rw.WriteHeader(http.StatusNotFound)
 		}
 
+                rw.Header().Set("Access-Control-Allow-Origin", "*")
+                rw.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
+                rw.Header().Set("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild")
 		rw.Header().Set("Content-Type", "application/json")
 		body, err = ioutil.ReadAll(resp.Body)
 		if err != nil {
@@ -51,6 +58,5 @@ func GetInfoHandler(rw http.ResponseWriter, r *http.Request, p httprouter.Params
 func OptInfoHandler(rw http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	rw.Header().Set("Access-Control-Allow-Origin", "*")
 	rw.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS")
-	rw.Header().Set("Access-Control-Allow-Headers", "X-PINGOTHER")
-	rw.Header().Set("Access-Control-Max-Age", "1728000")
+        rw.Header().Set("Access-Control-Allow-Headers", "X-PINGOTHER")
 }
